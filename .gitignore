@@ -1,0 +1,37 @@
+# Dados brutos e processados: não versionamos os arquivos, só a pasta (via .gitkeep)
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/README.md
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/README.md
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+
+# Cache de bytecode do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Checkpoints do Jupyter
+.ipynb_checkpoints/
+
+# Variáveis de ambiente e credenciais
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Figuras geradas automaticamente
+figuras/*
+!figuras/README.md
+
+# Sistema operacional / editor
+.DS_Store
+Thumbs.db
+.vscode/
