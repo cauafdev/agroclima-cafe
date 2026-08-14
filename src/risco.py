@@ -46,12 +46,15 @@ def contar_sequencias_secas(df, dias_min=10, apenas_estacao_chuvosa=True):
 
 
 def resumo_anual_risco(df):
-    """Contagem por ano de dias de geada leve/severa e dias de chuva excessiva."""
+    """Contagem por ano de dias de geada leve/severa, dias de chuva excessiva e veranicos."""
     ano = df["time"].dt.year
+    veranicos_por_ano = contar_sequencias_secas(df)["inicio"].dt.year.value_counts()
+
     resumo = pd.DataFrame({
         "geada_leve": marcar_geada(df, LIMITE_GEADA_LEVE).groupby(ano).sum(),
         "geada_severa": marcar_geada(df, LIMITE_GEADA_SEVERA).groupby(ano).sum(),
         "chuva_excessiva": marcar_chuva_excessiva(df).groupby(ano).sum(),
     })
+    resumo["veranicos"] = veranicos_por_ano.reindex(resumo.index).fillna(0).astype(int)
     resumo.index.name = "ano"
     return resumo
