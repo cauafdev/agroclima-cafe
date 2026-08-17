@@ -14,14 +14,20 @@ de colheita e plantio com base em dados históricos e locais.
 Este é também um projeto de estudo — o código e as análises evoluem à medida
 que aprendo.
 
+**📊 [Veja a pesquisa completa em um único notebook: `Projeto_Agroclima_Cafe.ipynb`](Projeto_Agroclima_Cafe.ipynb)**
+— coleta, limpeza, análise exploratória, correlação, regressão e
+conclusões, com todos os gráficos e tabelas renderizados direto no
+GitHub, sem precisar rodar nada.
+
 ## Estrutura de pastas
 
 ```
 agroclima-cafe/
-├── README.md              -> este arquivo
-├── requirements.txt       -> lista de bibliotecas
-├── LICENSE                -> licença MIT
-├── .gitignore              -> o que o Git deve ignorar
+├── README.md                        -> este arquivo
+├── Projeto_Agroclima_Cafe.ipynb     -> pesquisa completa em um notebook só (comece por aqui)
+├── requirements.txt                 -> lista de bibliotecas
+├── LICENSE                          -> licença MIT
+├── .gitignore                        -> o que o Git deve ignorar
 ├── data/
 │   ├── raw/                -> dados crus, como vieram da fonte (NUNCA edite)
 │   └── processed/          -> dados limpos, prontos pra análise
@@ -48,7 +54,10 @@ agroclima-cafe/
    .venv\Scripts\activate
    pip install -r requirements.txt
    ```
-3. Abra os notebooks na pasta `notebooks/` em ordem (01 → 04).
+3. Para ver a pesquisa inteira de uma vez, abra `Projeto_Agroclima_Cafe.ipynb`
+   na raiz (é autocontido, refaz a coleta sozinho). Para o pipeline
+   real passo a passo, abra os notebooks em `notebooks/` em ordem
+   (01 → 04).
 
 ## Fontes de dados
 
