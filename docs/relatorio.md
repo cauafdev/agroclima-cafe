@@ -6,22 +6,30 @@ Análise completa, com gráficos e código, em `notebooks/04_relatorio.ipynb`.
 
 ## Resumo
 
-Analisamos 25 anos (2000-2024) de dados climáticos diários (Open-Meteo) e
-produção cafeeira anual (IBGE/SIDRA) de Lavras-MG, calculando índices de
-risco climático (geada, chuva excessiva, veranico) e cruzando-os com
-produção, quantidade produzida e rendimento médio. Nesta fase, não
-encontramos evidência de correlação linear forte entre os riscos
+Analisamos 25 anos (2000-2024) de dados climáticos diários (Open-Meteo,
+mais a estação real do INMET em Lavras/UFLA para geada — ver Principais
+achados) e produção cafeeira anual (IBGE/SIDRA) de Lavras-MG, calculando
+índices de risco climático (geada, chuva excessiva, veranico) e
+cruzando-os com produção, quantidade produzida e rendimento médio. Nesta
+fase, não encontramos evidência confiável de correlação entre os riscos
 climáticos medidos e a produtividade do café — um resultado tão
-informativo quanto uma correlação forte teria sido, já que aponta para
-onde a próxima etapa de investigação precisa ir (ver Próximos passos).
+informativo quanto uma correlação forte teria sido, já que aponta com
+precisão para onde a próxima etapa de investigação precisa ir (ver
+Próximos passos).
 
 ## Principais achados
 
-- **Geada não é mensurável com a fonte atual**: com o limiar de geada
-  leve (≤3°C), nenhum dos 9.132 dias da série é classificado — a mínima
-  absoluta observada é 3,1°C. É uma limitação da fonte (Open-Meteo é
-  reanálise em grade, que suaviza extremos locais), não evidência de
-  ausência de geada em Lavras.
+- **Geada: resolvemos a fonte, mas ela foi rara nesses 25 anos**. Com o
+  Open-Meteo (reanálise em grade), nenhum dos 9.132 dias da série era
+  classificado como geada (limiar ≤3°C) — limitação da fonte, não
+  evidência de ausência de geada em Lavras. Depois de tentar sem sucesso
+  o BDMEP e a API/portal do INMET, encontramos os dados brutos de
+  observação por estação usados para construir o BR-DWGD (Xavier et
+  al., 2022), que incluem a estação real 83687 (Lavras/UFLA). Com esse
+  dado, geada passou a ser mensurável: **1 dia de geada leve em 25 anos**
+  (18/07/2000, 2,0°C), nenhum de geada severa. O problema deixou de ser
+  "não conseguimos medir" e passou a ser "geada foi rara demais nesses
+  25 anos para testar seu efeito estatisticamente".
 - **Chuva excessiva (>50 mm/dia) é rara e sem tendência**: no máximo 2
   dias por ano na série, sem padrão claro de alta ou queda ao longo dos
   25 anos.
@@ -32,33 +40,36 @@ onde a próxima etapa de investigação precisa ir (ver Próximos passos).
   concentra só 5 das 30 ocorrências — um primeiro indício de janela
   historicamente mais estável, ainda exploratório dado o tamanho da
   amostra.
-- **Clima x produção: correlações fracas em todos os pares testados**
-  (Pearson, |r| < 0,25, n=25 anos). A correlação mais forte é veranico x
-  área colhida (r ≈ -0,23), mas a área colhida cresce quase
-  monotonicamente no período (expansão econômica, não sinal climático),
-  o que pode confundir essa leitura. No rendimento médio por hectare —
-  a métrica de produtividade menos afetada por essa expansão — as
-  correlações ficam praticamente em zero (-0,05 a -0,06).
-- **Defasagem e não linearidade não mudam o quadro**: testamos risco
-  climático do ano N x produção do ano N+1 (correlações continuam
-  fracas, |r| < 0,2) e comparamos anos com muitos vs. poucos veranicos
-  (rendimento médio praticamente igual: ~1.373 vs ~1.329 kg/ha, ~3% de
-  diferença, dentro do ruído esperado ano a ano). Com os dados e
-  índices desta fase, **não conseguimos demonstrar que clima explica a
-  variação de produtividade do café em Lavras-MG**.
+- **Clima x produção: a correlação mais alta é frágil demais para
+  contar**. `geada_leve` aparece com as maiores correlações da tabela
+  (rendimento médio: r ≈ +0,35 no mesmo ano, r ≈ +0,44 com defasagem de
+  1 ano) — mas, com só 1 ano positivo em 25, isso compara essencialmente
+  um único ano (2000) contra os outros 24. O próprio sinal reforça a
+  leitura de coincidência: 2000 teve o 2º maior rendimento da série
+  inteira, e 2001 (o ano seguinte) teve o maior — o oposto do que se
+  esperaria se a geada estivesse prejudicando a produção. Fora a geada,
+  todas as correlações são fracas (|r| < 0,25, n=25 anos); a mais
+  confiável é veranico x área colhida (r ≈ -0,23), mas a área colhida
+  cresce quase monotonicamente no período (expansão econômica, não
+  sinal climático), o que pode confundir essa leitura. No rendimento
+  médio por hectare — a métrica de produtividade menos afetada por essa
+  expansão — as demais correlações (fora geada) ficam praticamente em
+  zero.
+- **Defasagem e não linearidade não mudam o quadro** (fora o resultado
+  frágil de geada acima): comparamos anos com muitos vs. poucos
+  veranicos (rendimento médio praticamente igual: ~1.373 vs ~1.329
+  kg/ha, ~3% de diferença, dentro do ruído esperado ano a ano). Com os
+  dados e índices desta fase, **não conseguimos demonstrar, de forma
+  estatisticamente confiável, que clima explica a variação de
+  produtividade do café em Lavras-MG**.
 
 ## Limitações
 
-- Geada subestimada pela fonte climática atual (Open-Meteo). Tentamos
-  buscar dado de estação real (INMET, estação 83687, Lavras/UFLA) via
-  BDMEP, mas o pedido de exportação não teve resposta, e a API/portal
-  público do INMET também não respondeu a requisições diretas. Um teste
-  adicional trocando o modelo de reanálise do Open-Meteo (ERA5 →
-  ERA5-Land, grade mais fina) num evento de geada real e documentado
-  (julho/2021, Sul de Minas) não mudou o quadro — nenhum dos dois captura
-  mínimas ≤3°C no período —, o que reforça que a limitação é de
-  resolução espacial do dado em grade, não um parâmetro de fonte a
-  ajustar. Fechamos essa via nesta fase (ver `notebooks/03_eda.ipynb`).
+- Geada deixou de ser uma limitação de fonte de dado, mas virou uma
+  limitação de amostra: só 1 ocorrência em 25 anos nesta estação, pouco
+  demais para testar seu efeito real na produção — mesmo com dado
+  confiável, a pergunta "geada afeta a produção?" segue em aberto por
+  falta de eventos na janela observada.
 - Amostra pequena (25 pontos anuais) para conclusões estatisticamente
   robustas sobre correlação clima-produção, mesmo testando defasagem e
   faixas.
@@ -72,10 +83,10 @@ onde a próxima etapa de investigação precisa ir (ver Próximos passos).
 
 ## Próximos passos
 
-- Retomar a busca por fonte de geada mais confiável quando houver acesso
-  real a dado de estação — estação 83687 (Lavras/UFLA) via BDMEP/INMET
-  (se/quando o pedido de exportação responder) ou outra rede de
-  estações.
+- Verificar se a produção do IBGE/SIDRA tem cobertura anterior a 2000
+  para Lavras — a estação 83687 tem registro desde 1911, então ampliar
+  o recorte temporal poderia trazer mais anos com geada real observada
+  para testar o efeito com mais robustez estatística.
 - Buscar séries de preço do café para controlar o efeito de mercado.
 - Ampliar o recorte geográfico (outros municípios da região) para
   aumentar o tamanho da amostra.

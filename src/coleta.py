@@ -2,8 +2,13 @@
 # Funções reutilizáveis para coletar dados climáticos e de produção
 # cafeeira (ex.: APIs como INMET, NASA POWER, Open-Meteo, IBGE) para a
 # região de Lavras-MG. Usado principalmente pelo notebook 01_coleta.ipynb.
-import requests
+import os
+import tempfile
+
+import gdown
+import numpy as np
 import pandas as pd
+import requests
 
 # Código IBGE do município de Lavras-MG, usado nas consultas ao SIDRA.
 CODIGO_IBGE_LAVRAS = 3138203
@@ -66,6 +71,36 @@ def coletar_producao_cafe(ano_inicio=2000, ano_fim=2024):
     producao.to_csv(caminho_saida, index=False)
     print(f"Arquivo salvo em {caminho_saida}")
     return producao
+
+
+def coletar_geada_estacao_83687(ano_inicio=2000, ano_fim=2024):
+    """Baixa temperatura mínima diária observada na estação convencional do
+    INMET em Lavras/UFLA (código 83687), extraída dos dados de observação de
+    estação (não reanálise em grade) usados para construir o BR-DWGD.
+
+    Fonte: Xavier, A. C., Scanlon, B. R., King, C. W. & Alves, A. I. (2022),
+    New Improved Brazilian Daily Weather Gridded Data (1961-2020), Int J
+    Climatol. https://doi.org/10.1002/joc.7731 —
+    https://github.com/AlexandreCandidoXavier/BR-DWGD
+    """
+    with tempfile.TemporaryDirectory() as tmp:
+        caminho_npz = os.path.join(tmp, "Tmin.npz")
+        gdown.download(id="1ASwTqJFgBc2oTQgdkAo3mKwOMsH8BmZl", output=caminho_npz, quiet=True)
+
+        npz = np.load(caminho_npz, allow_pickle=True)
+        ids_estacoes = [str(codigo) for codigo in npz["ID"]]
+        indice_estacao = ids_estacoes.index("83687")
+        tmin_estacao = npz["data"][:, indice_estacao].copy()
+        npz.close()
+
+    dias = pd.date_range("1961-01-01", "2025-12-31")
+    df = pd.DataFrame({"time": dias, "tmin_estacao": tmin_estacao})
+    df = df[(df["time"] >= f"{ano_inicio}-01-01") & (df["time"] <= f"{ano_fim}-12-31")]
+
+    caminho_saida = f"data/raw/lavras_geada_estacao_83687_{ano_inicio}_{ano_fim}.csv"
+    df.to_csv(caminho_saida, index=False)
+    print(f"Arquivo salvo em {caminho_saida}")
+    return df
 
 
 def validar_dados(df, coluna_data="time"):

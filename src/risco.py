@@ -15,8 +15,8 @@ LIMITE_GEADA_SEVERA = 0.0
 MESES_ESTACAO_CHUVOSA = {10, 11, 12, 1, 2, 3}
 
 
-def marcar_geada(df, limite=LIMITE_GEADA_LEVE):
-    return df["temperature_2m_min"] <= limite
+def marcar_geada(serie_tmin, limite=LIMITE_GEADA_LEVE):
+    return serie_tmin <= limite
 
 
 def marcar_dia_seco(df, limite_mm=1.0):
@@ -45,14 +45,22 @@ def contar_sequencias_secas(df, dias_min=10, apenas_estacao_chuvosa=True):
     return sequencias.reset_index(drop=True)
 
 
-def resumo_anual_risco(df):
-    """Contagem por ano de dias de geada leve/severa, dias de chuva excessiva e veranicos."""
+def resumo_anual_risco(df, tmin_geada=None):
+    """Contagem por ano de dias de geada leve/severa, dias de chuva excessiva e veranicos.
+
+    `tmin_geada`: Series opcional de temperatura mínima (mesmo índice de `df`),
+    vinda de estação real — mais confiável para geada que a reanálise em grade
+    usada nas demais variáveis. Se omitida, usa `df["temperature_2m_min"]`
+    (Open-Meteo), que na prática nunca classifica geada nesta série (ver
+    `03_eda.ipynb`).
+    """
     ano = df["time"].dt.year
     veranicos_por_ano = contar_sequencias_secas(df)["inicio"].dt.year.value_counts()
+    serie_tmin = tmin_geada if tmin_geada is not None else df["temperature_2m_min"]
 
     resumo = pd.DataFrame({
-        "geada_leve": marcar_geada(df, LIMITE_GEADA_LEVE).groupby(ano).sum(),
-        "geada_severa": marcar_geada(df, LIMITE_GEADA_SEVERA).groupby(ano).sum(),
+        "geada_leve": marcar_geada(serie_tmin, LIMITE_GEADA_LEVE).groupby(ano).sum(),
+        "geada_severa": marcar_geada(serie_tmin, LIMITE_GEADA_SEVERA).groupby(ano).sum(),
         "chuva_excessiva": marcar_chuva_excessiva(df).groupby(ano).sum(),
     })
     resumo["veranicos"] = veranicos_por_ano.reindex(resumo.index).fillna(0).astype(int)
