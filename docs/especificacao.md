@@ -18,15 +18,26 @@ de café identificarem as melhores janelas de colheita e plantio.
 - É possível identificar janelas de colheita/plantio com menor risco
   climático a partir de dados históricos?
 
-## Fontes de dados (a definir/preencher)
+## Fontes de dados
 
-- Dados climáticos: (ex. INMET, NASA POWER, Open-Meteo)
-- Dados de produção cafeeira: (ex. CONAB, EPAMIG, cooperativas locais)
+- Dados climáticos: **Open-Meteo** (Archive API, reanálise diária em
+  grade, 2000-2024). Avaliamos usar dado de estação real do INMET
+  (estação convencional 83687, Lavras/UFLA) para captar geada com mais
+  fidelidade, mas o acesso é só via BDMEP com conta e exportação por
+  e-mail — pedido feito e sem resposta, e a API/portal público do INMET
+  não respondeu a requisições diretas nas tentativas feitas. Fica como
+  possível fonte para trabalho futuro; ver limitação de geada em
+  `docs/relatorio.md`.
+- Dados de produção cafeeira: **IBGE/SIDRA** (Produção Agrícola
+  Municipal, tabela 1613, produto "Café (em grão) Total"), granularidade
+  municipal e anual. CONAB foi avaliada e descartada por só ter série em
+  nível regional, não municipal.
 
 ## Escopo inicial
 
 - Foco geográfico: região de Lavras-MG.
-- Recorte temporal: (definir período histórico disponível).
+- Recorte temporal: 2000-2024 (25 anos), limitado pela série anual de
+  produção do IBGE/SIDRA disponível para o município.
 
 ## Fora de escopo (por enquanto)
 

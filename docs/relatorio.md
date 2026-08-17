@@ -49,8 +49,16 @@ onde a próxima etapa de investigação precisa ir (ver Próximos passos).
 
 ## Limitações
 
-- Geada subestimada pela fonte climática atual (Open-Meteo) — cadastro
-  no BDMEP/INMET em andamento para buscar dado de estação real.
+- Geada subestimada pela fonte climática atual (Open-Meteo). Tentamos
+  buscar dado de estação real (INMET, estação 83687, Lavras/UFLA) via
+  BDMEP, mas o pedido de exportação não teve resposta, e a API/portal
+  público do INMET também não respondeu a requisições diretas. Um teste
+  adicional trocando o modelo de reanálise do Open-Meteo (ERA5 →
+  ERA5-Land, grade mais fina) num evento de geada real e documentado
+  (julho/2021, Sul de Minas) não mudou o quadro — nenhum dos dois captura
+  mínimas ≤3°C no período —, o que reforça que a limitação é de
+  resolução espacial do dado em grade, não um parâmetro de fonte a
+  ajustar. Fechamos essa via nesta fase (ver `notebooks/03_eda.ipynb`).
 - Amostra pequena (25 pontos anuais) para conclusões estatisticamente
   robustas sobre correlação clima-produção, mesmo testando defasagem e
   faixas.
@@ -64,8 +72,10 @@ onde a próxima etapa de investigação precisa ir (ver Próximos passos).
 
 ## Próximos passos
 
-- Buscar fonte de geada mais confiável — estação 83687 (Lavras/UFLA) no
-  BDMEP/INMET — para validar o achado sobre geada.
+- Retomar a busca por fonte de geada mais confiável quando houver acesso
+  real a dado de estação — estação 83687 (Lavras/UFLA) via BDMEP/INMET
+  (se/quando o pedido de exportação responder) ou outra rede de
+  estações.
 - Buscar séries de preço do café para controlar o efeito de mercado.
 - Ampliar o recorte geográfico (outros municípios da região) para
   aumentar o tamanho da amostra.
