@@ -14,11 +14,11 @@ cruzando-os com produção, quantidade produzida e rendimento médio.
 Ampliamos de 2000-2024 (25 anos) para 1974-2024 depois de descobrir que
 o IBGE/SIDRA cobre Lavras desde 1974 — dobrar a amostra deu à geada,
 pela primeira vez, um número de ocorrências grande o bastante para
-comparar de verdade. Nesta fase, a correlação direta entre geada e
-produtividade é positiva e contraintuitiva, mas isso tem uma explicação
-concreta (não é efeito real — ver Principais achados); a correlação
-defasada aponta na direção esperada pela agronomia, mas ainda é fraca
-demais para provar causalidade.
+comparar de verdade. Uma regressão controlando por área colhida mostrou
+que o efeito positivo de geada no mesmo ano é artefato de um único ano
+atípico (não é real), enquanto o efeito negativo defasado (geada
+prejudicando a safra seguinte) é mais robusto e consistente com a
+agronomia, ainda que estatisticamente frágil com a amostra atual.
 
 ## Principais achados
 
@@ -45,32 +45,40 @@ demais para provar causalidade.
   concentra só 10 das 57 ocorrências — o mesmo padrão do recorte
   anterior de 25 anos, o que reforça que é um sinal real, não ruído de
   amostra pequena.
-- **Clima x produção: a correlação direta de geada é enganosa, mas a
-  defasada é mais plausível**. `geada_leve` e `geada_severa` aparecem
-  com as maiores correlações diretas da tabela (rendimento: r≈+0,31 e
-  r≈+0,62) — o oposto do que a agronomia prevê. A explicação: nos anos
-  com geada leve a quantidade produzida é praticamente igual à dos anos
-  sem (4.816t vs 4.783t em média), mas a área colhida é bem menor
-  (2.568ha vs 3.515ha) — 4 dos 6 anos de geada caem entre 1975 e 1981,
-  no início da série, quando a lavoura de Lavras ainda era menor. O
-  tamanho da área naquele período é o fator de confusão, não a geada.
-  Já a correlação **defasada** (geada do ano N x produção do ano N+1)
-  vira negativa em toda a tabela de geada (rendimento: r≈-0,23 e
-  r≈-0,16) — consistente com o que se esperaria agronomicamente, ainda
-  que estatisticamente frágil com n=6. Fora a geada, todas as
-  correlações (chuva excessiva, veranico) seguem fracas (|r| < 0,25) em
-  todas as abordagens testadas (direta, defasada, por faixas).
+- **Correlação direta de geada é enganosa; regressão confirma o porquê**.
+  `geada_leve` e `geada_severa` aparecem com as maiores correlações
+  diretas da tabela (rendimento: r≈+0,31 e r≈+0,62) — o oposto do que a
+  agronomia prevê. Uma regressão múltipla (rendimento em função de
+  geada **e** área colhida) mostrou que esse efeito positivo depende
+  inteiramente de um único ano: **1981**, que teve o maior rendimento
+  da série (3.757 kg/ha, mais que o dobro do segundo colocado) *e*
+  geada leve no mesmo ano. Removendo só esse ano, o coeficiente de
+  geada cai de +270 para +50 kg/ha e deixa de ser estatisticamente
+  significativo (p≈0,04 → p≈0,67) — o efeito direto é artefato, não
+  real.
+- **O sinal defasado é mais robusto**: geada do ano N associada a
+  rendimento *menor* no ano N+1 (r≈-0,23 leve, r≈-0,16 severa na
+  correlação simples; coeficiente ≈ -322 kg/ha, p≈0,03 na regressão
+  controlando por área colhida). Diferente do efeito direto, esse sinal
+  **sobrevive** à remoção do ano mais influente (cai para -228 kg/ha,
+  p≈0,05 — ainda na borda da significância, mas não desaparece). É a
+  evidência mais consistente com a agronomia encontrada na pesquisa,
+  embora o R² de ambos os modelos seja baixo (~0,10) — geada explica só
+  uma fração pequena da variação de rendimento, não é o fator
+  principal. Fora a geada, chuva excessiva e veranico seguem sem
+  relação clara com produção em qualquer abordagem testada (direta,
+  defasada, por faixas).
 
 ## Limitações
 
-- Geada: amostra real (6 anos leves, 1 severo em 51), mas a correlação
-  direta é confundida pela tendência de `area_colhida_ha` — a maioria
-  dos anos de geada cai no início da série, quando a área colhida era
-  menor por razões econômicas, não climáticas. O sinal defasado é mais
-  plausível, mas ainda estatisticamente frágil com essa amostra.
+- Geada: efeito direto é artefato de um único ano (1981); o efeito
+  defasado é mais robusto mas ainda estatisticamente frágil — baseado
+  em só 6 anos de geada leve e 1 de geada severa, com significância na
+  borda (p≈0,05) depois de remover o ano mais influente.
 - Amostra pequena para correlação: 51 pontos anuais — melhor que os 25
   anteriores, mas ainda pouco para conclusões estatisticamente
-  robustas, especialmente para geada severa (n=1).
+  robustas. R² dos modelos de regressão é baixo (~0,10) mesmo no melhor
+  caso.
 - `area_colhida_ha` tem tendência temporal forte não relacionada a
   clima, que confunde diretamente a correlação de geada e pode afetar
   outras correlações que a envolvem.
@@ -82,10 +90,7 @@ demais para provar causalidade.
 
 ## Próximos passos
 
-- Testar uma regressão controlando por `area_colhida_ha` para isolar o
-  efeito de geada da tendência de expansão da lavoura — o achado sobre
-  geada sugere que isso pode revelar um sinal real hoje mascarado pela
-  correlação direta.
-- Buscar séries de preço do café para controlar o efeito de mercado.
 - Ampliar o recorte geográfico (outros municípios da região) para
-  aumentar o tamanho da amostra.
+  aumentar o número de anos-com-geada e dar mais robustez estatística
+  ao sinal defasado encontrado na regressão.
+- Buscar séries de preço do café para controlar o efeito de mercado.
