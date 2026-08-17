@@ -21,7 +21,7 @@ de café identificarem as melhores janelas de colheita e plantio.
 ## Fontes de dados
 
 - Dados climáticos: **Open-Meteo** (Archive API, reanálise diária em
-  grade, 2000-2024) para temperatura máx/mín e precipitação. Para
+  grade, 1974-2024) para temperatura máx/mín e precipitação. Para
   **geada** especificamente, usamos a estação convencional real do
   INMET em Lavras/UFLA (83687), via os dados brutos de observação por
   estação usados para construir o **BR-DWGD** (Xavier et al., 2022,
@@ -38,8 +38,10 @@ de café identificarem as melhores janelas de colheita e plantio.
 ## Escopo inicial
 
 - Foco geográfico: região de Lavras-MG.
-- Recorte temporal: 2000-2024 (25 anos), limitado pela série anual de
-  produção do IBGE/SIDRA disponível para o município.
+- Recorte temporal: 1974-2024 (51 anos), limitado pela série anual de
+  produção do IBGE/SIDRA disponível para o município (que cobre desde
+  1974). Ampliado a partir do recorte inicial de 2000-2024 (25 anos)
+  depois de descobrir essa cobertura mais longa — ver `docs/relatorio.md`.
 
 ## Fora de escopo (por enquanto)
 

@@ -14,7 +14,7 @@ import requests
 CODIGO_IBGE_LAVRAS = 3138203
 
 
-def coletar_clima(ano_inicio=2000, ano_fim=2024):
+def coletar_clima(ano_inicio=1974, ano_fim=2024):
     """Baixa temperatura máx/mín e precipitação diárias de Lavras-MG via Open-Meteo."""
     url = "https://archive-api.open-meteo.com/v1/archive"
     params = {
@@ -38,7 +38,7 @@ def coletar_clima(ano_inicio=2000, ano_fim=2024):
     return df
 
 
-def coletar_producao_cafe(ano_inicio=2000, ano_fim=2024):
+def coletar_producao_cafe(ano_inicio=1974, ano_fim=2024):
     """Baixa série anual de produção de café em Lavras-MG via IBGE (PAM, tabela 1613, SIDRA).
 
     Fonte: Produção Agrícola Municipal, produto "Café (em grão) Total" (código 2723).
@@ -73,7 +73,7 @@ def coletar_producao_cafe(ano_inicio=2000, ano_fim=2024):
     return producao
 
 
-def coletar_geada_estacao_83687(ano_inicio=2000, ano_fim=2024):
+def coletar_geada_estacao_83687(ano_inicio=1974, ano_fim=2024):
     """Baixa temperatura mínima diária observada na estação convencional do
     INMET em Lavras/UFLA (código 83687), extraída dos dados de observação de
     estação (não reanálise em grade) usados para construir o BR-DWGD.
