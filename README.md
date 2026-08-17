@@ -52,10 +52,23 @@ agroclima-cafe/
 
 ## Fontes de dados
 
-- [INMET - Instituto Nacional de Meteorologia](https://portal.inmet.gov.br/dadoshistoricos) — dados históricos de estações meteorológicas.
-- [NASA POWER](https://power.larc.nasa.gov/) — dados climáticos históricos via API, cobertura global.
-- [CONAB - Companhia Nacional de Abastecimento](https://www.conab.gov.br/info-agro/safras/cafe) — séries históricas de safra e produtividade do café.
-- [EPAMIG - Empresa de Pesquisa Agropecuária de Minas Gerais](http://www.epamig.br/) — pesquisa e dados agropecuários regionais.
+- [Open-Meteo](https://open-meteo.com/) (Archive API) — temperatura máx/mín e precipitação diárias, 1974-2024, reanálise histórica.
+- Estação real do INMET em Lavras/UFLA (código 83687) — usada só para geada, via os dados de observação por estação do [BR-DWGD](https://github.com/AlexandreCandidoXavier/BR-DWGD) (Xavier et al., 2022).
+- [IBGE/SIDRA](https://sidra.ibge.gov.br/) (Produção Agrícola Municipal, tabela 1613) — área colhida, quantidade produzida e rendimento médio de café em Lavras-MG, 1974-2024.
+
+Detalhes de cada fonte e por que foram escolhidas em [docs/especificacao.md](docs/especificacao.md).
+
+## Principais achados
+
+25 anos de dados de reanálise (Open-Meteo) nunca registravam geada em
+Lavras — limitação da fonte, não ausência real do fenômeno. Trocamos
+para dado de estação real e ampliamos o recorte para 51 anos, o que
+revelou 6 anos com geada leve e 1 com geada severa. Uma regressão
+controlando por área colhida mostrou que o efeito aparente de geada no
+mesmo ano era artefato de um único ano atípico — mas o efeito
+*defasado* (geada de um ano prejudicando o rendimento do ano seguinte)
+se mantém, ainda que estatisticamente frágil. Análise completa em
+[docs/relatorio.md](docs/relatorio.md).
 
 ## Licença
 
@@ -63,4 +76,7 @@ Distribuído sob a licença MIT. Veja [LICENSE](LICENSE) para mais detalhes.
 
 ## Status
 
-🚧 Em desenvolvimento.
+✅ Fase 1 concluída — coleta, limpeza, EDA e relatório com dados reais
+(1974-2024, Lavras-MG). Ideias para uma fase futura (mais municípios,
+dado de preço do café) documentadas em
+[docs/relatorio.md](docs/relatorio.md#próximos-passos).

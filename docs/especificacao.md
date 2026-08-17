@@ -37,7 +37,9 @@ de café identificarem as melhores janelas de colheita e plantio.
 
 ## Escopo inicial
 
-- Foco geográfico: região de Lavras-MG.
+- Foco geográfico: só o município de Lavras-MG (não outros municípios
+  da região) — dados climáticos pontuais e produção municipal do IBGE
+  sempre se referem só a Lavras.
 - Recorte temporal: 1974-2024 (51 anos), limitado pela série anual de
   produção do IBGE/SIDRA disponível para o município (que cobre desde
   1974). Ampliado a partir do recorte inicial de 2000-2024 (25 anos)
@@ -47,6 +49,12 @@ de café identificarem as melhores janelas de colheita e plantio.
 
 - Construção do produto SaaS em si (fica para uma fase futura, após validar
   a pesquisa).
+- Outros municípios da região (o foco desta fase é só Lavras-MG).
+- Dados de preço/mercado do café — nunca fez parte do escopo inicial.
+
+Ambos aparecem em `docs/relatorio.md` como ideias de trabalho futuro,
+não como pendências desta fase — a pesquisa é considerada completa com
+o escopo acima.
 
 ## Referências
 
