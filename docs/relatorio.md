@@ -90,11 +90,6 @@ agronomia, ainda que estatisticamente frágil com a amostra atual.
 
 ## Próximos passos
 
-Esta fase é considerada completa com o escopo definido em
-`docs/especificacao.md` (só Lavras-MG, sem dado de preço/mercado — nunca
-fez parte do plano inicial). As ideias abaixo ficam registradas como
-possíveis direções para uma fase futura, não como pendências:
-
 - Ampliar o recorte geográfico (outros municípios da região) para
   aumentar o número de anos-com-geada e dar mais robustez estatística
   ao sinal defasado encontrado na regressão.
